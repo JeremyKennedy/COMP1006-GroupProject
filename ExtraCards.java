@@ -65,52 +65,20 @@ public class ExtraCards extends Player {
 	// will pick cards until it gets the power card
 	public boolean ExtraCardss(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> player) {
 
-
-		//iterates if the power cards are in hand
+		// looks for power cards in hand, then play it
 		for (int i = 0; i < hand.size(); i++) {
-			//checks if power card number two exist is in hands
-			if (hand.get(i).getRank() == 2) {
-				//cheeks the suit of the card in hand and the discarded card on the top
-				if (this.hand.get(i).getSuit() == discardPile.top().getSuit()) {
-					discardPile.add(this.hand.remove(i));
-					//return card 2
-					return true;
+			if (hand.get(i).getRank() == 2 || hand.get(i).getRank() == 4 || hand.get(i).getRank() == 7 ||
+					hand.get(i).getRank() == 8) {
+				// if it is a power card and it can be played, play it
+				if (discardPile.isValidPlay(hand.get(i))) {
+					discardPile.add(this.hand.remove(hand.size() - 1));
+					// if our hand is empty, return true
+					return this.hand.size() == 0;
 				}
-				continue;
-			}
-			//checks if power card number Jack exist is in hands
-			else if (hand.get(i).getRank() == 4) {
-				//cheeks the suit of the card in hand and the discarded card on the top
-				if (hand.get(i).getSuit() == discardPile.top().getSuit()) {
-					discardPile.add(this.hand.remove(i));
-
-					//return card 4
-					return true;
-				}
-				continue;
-			}
-			//checks if power card number Jack exist is in hands
-			else if (hand.get(i).getRank() == 7) {
-				//cheeks the suit of the card in hand and the discarded card on the top
-				if (hand.get(i).getSuit() == discardPile.top().getSuit()) {
-					discardPile.add(this.hand.remove(i));
-					//return card 7
-					if (this.hand.size() == 0) {
-						return true;
-					}
-					return false;
-				}
-				continue;
-			}
-			//checks if power card number eight exist is in hands
-			else if (hand.get(i).getRank() == 8) {
-				discardPile.add(this.hand.remove(i));
-				//return card 8
-				return true;
 			}
 		}
 
-		// if there in no power card in hand, pick up cards until we get one
+		// if there in no power card in hand, pick up cards until we get one, then play it
 		while (!drawPile.isEmpty()) {
 			Card pickedCard = pickupCard(drawPile);
 			// check if the pickedCard is a power card
