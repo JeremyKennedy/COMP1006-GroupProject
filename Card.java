@@ -62,6 +62,22 @@ public class Card implements Comparable<Card> {
 		return this.suit;
 	}
 
+	public int getPoints() {
+		if (11 <= getRank() && getRank() <= 13) {
+			return 10;
+		} else if (getRank() == 14) {
+			return 1;
+		} else if (getRank() == 8) {
+			return 50;
+		} else if (getRank() == 2 || getRank() == 4) {
+			return 25;
+		} else if (getRank() == 7) {
+			return 20;
+		} else {
+			return getRank();
+		}
+	}
+
 	@Override
 	public int compareTo(Card other) {
 		int thisPoints = getPoints();
