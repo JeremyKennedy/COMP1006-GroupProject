@@ -32,13 +32,15 @@ public class Crazy8Game {
 
 	private static void startGame() {
 		win = false;
+		boolean tie = false;
 		player = -1;    // start game with player 0
 		direction = 1;  // 1 = forwards, -1 = backwards
+		int consecutivePasses = 0;
 
 		System.out.println("Draw pile is: " + drawPile);
 		System.out.println("Discard pile is: " + discardPile);
 
-		while (!win) {
+		while (!win && !tie) {
 			player = getNextPlayer();
 			System.out.println("\nIt is player " + player + "'s turn! [" + players.get(player).getClass() + "]");
 			System.out.println("Their hand: " + players.get(player));
@@ -55,6 +57,7 @@ public class Crazy8Game {
 
 			Card newTopDiscard = discardPile.top();
 			if (topDiscard != newTopDiscard) {
+				consecutivePasses = 0;
 				if (newTopDiscard.getRank() == 2) {
 					player = getNextPlayer();
 					System.out.printf(
@@ -70,8 +73,14 @@ public class Crazy8Game {
 					System.out.println("A seven was played! Switching play direction...");
 					direction = direction * -1;
 				}
+			} else if (consecutivePasses >= 4) {
+				System.out.println("--------------------\n");
+				System.out.println("No one can play, and the draw pile is empty. Tie game! Resetting...");
+				emptyPlayersHands();
+				tie = true;
 			} else {
 				System.out.println("No card was played, player passed their turn.");
+				consecutivePasses++;
 			}
 		}
 
@@ -85,7 +94,10 @@ public class Crazy8Game {
 			}
 		}
 		players.get(player).points += points;
-		System.out.printf("--------------------\n\nWinner is player %d, with %d points this round!%n", player, points);
+		if (!tie) {
+			System.out.println("--------------------\n");
+			System.out.printf("Winner is player %d, with %d points this round!%n", player, points);
+		}
 		System.out.println("\nLEADERBOARD:");
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).points > highestPoints) {
@@ -141,6 +153,12 @@ public class Crazy8Game {
 		for (int i = 0; i < players.size(); i++) {
 			players.get(i).hand = getNewHand();
 			System.out.println("[" + players.get(i).getClass() + "] " + "Player " + i + "'s hand: " + players.get(i));
+		}
+	}
+
+	private static void emptyPlayersHands() {
+		for (Player player : players) {
+			player.hand = new ArrayList<>();
 		}
 	}
 
