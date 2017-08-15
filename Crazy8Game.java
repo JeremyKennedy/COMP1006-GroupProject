@@ -6,11 +6,11 @@ public class Crazy8Game {
 
 	public static void main(String[] args) {
 		int BAD_PLAYERS = 3;     // BadPlayer
-		int RANDOM_PLAYERS = 1;  // RandomPlayer
+		int RANDOM_PLAYERS = 0;  // RandomPlayer
 		int EIGHTS_PLAYERS = 0;  // MindTheEights
 		int HAMPER_PLAYERS = 0;  // HamperLeader
 		int HIGH_PLAYERS = 0;    // DiscardHighPoints
-		int EXTRA_PLAYERS = 1;   // ExtraCards
+		int EXTRA_PLAYERS = 0;   // ExtraCards
 
 
 		/* create the deck */
@@ -78,8 +78,8 @@ public class Crazy8Game {
 			System.out.println("\nIt is player " + player + "'s turn! [" + players.get(player).getClass() + "]");
 			System.out.println("Their hand: " + players.get(player));
 			Card topDraw = drawPile.isEmpty() ? new Card("None", "None") : drawPile.peek();
-			System.out.println("Top of draw pile: " + topDraw);
 			System.out.println("Top of discard pile: " + discardPile.top());
+			System.out.println("Top of draw pile: " + topDraw);
 
 			win = players.get(player).play(discardPile, drawPile, players);
 
