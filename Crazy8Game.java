@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.Stack;
 
 public class Crazy8Game {
@@ -74,11 +73,6 @@ public class Crazy8Game {
 			} else {
 				System.out.println("No card was played, player passed their turn.");
 			}
-
-
-			//			if (drawPile.isEmpty()) {
-			//				refillDrawPile(drawPile, discardPile);
-			//			}
 		}
 
 		// calculates and displays points
@@ -126,8 +120,6 @@ public class Crazy8Game {
 		for (int i = 0; i < EXTRA_PLAYERS; i++) {
 			players.add(new ExtraCards(new Card[]{}));
 		}
-
-		;
 		playerCount = players.size();
 	}
 
@@ -139,7 +131,6 @@ public class Crazy8Game {
 		}
 		Collections.shuffle(drawPile);
 		discardPile.add(drawPile.pop());
-
 	}
 
 	private static void dealCardsToPlayers() {
@@ -175,25 +166,6 @@ public class Crazy8Game {
 				deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
 			}
 		}
-
-		/* shuffle the deck */
-		Random rnd = new Random();
-		Card swap;
-		for (int i = deck.length - 1; i >= 0; i = i - 1) {
-			int pos = rnd.nextInt(i + 1);
-			swap = deck[pos];
-			deck[pos] = deck[i];
-			deck[i] = swap;
-		}
 		return deck;
-	}
-
-	public static void refillDrawPile() {
-		System.out.println("\nDraw pile is empty, shuffling!");
-		Collections.shuffle(discardPile.cards);
-		Stack<Card> cards = discardPile.cards;
-		for (int i = 0; i < cards.size(); i++) {
-			drawPile.push(discardPile.cards.pop());
-		}
 	}
 }
