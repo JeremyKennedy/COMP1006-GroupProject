@@ -15,8 +15,7 @@ public class DiscardPile {
 
 	/* add a card to the discard pile */
 	public void add(Card card) {
-		if (Objects.equals(card.rank, top().rank) || Objects.equals(card.suit, top().suit) ||
-				Objects.equals(card.rank, Card.RANKS[8]) || cards.isEmpty()) {
+		if (isValidPlay(card) || cards.isEmpty()) {
 			System.out.println("Added card to discard pile: " + card);
 			cards.push(card);
 		} else {
@@ -24,6 +23,11 @@ public class DiscardPile {
 			System.out.println("ERROR: Discarded card: " + card);
 			System.out.println("ERROR: Card on top of deck: " + top());
 		}
+	}
+
+	public boolean isValidPlay(Card card) {
+		return Objects.equals(card.rank, top().rank) || Objects.equals(card.suit, top().suit) ||
+				Objects.equals(card.rank, Card.RANKS[8]);
 	}
 
 	@Override

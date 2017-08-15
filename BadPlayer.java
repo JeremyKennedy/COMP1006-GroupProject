@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Stack;
 
 public class BadPlayer extends Player {
@@ -13,9 +12,7 @@ public class BadPlayer extends Player {
 		// go through all cards in the hand, and play the first valid one
 		while (true) {
 			for (int i = 0; i < hand.size(); i++) {
-				if (Objects.equals(hand.get(i).rank, discardPile.top().rank) ||
-						Objects.equals(hand.get(i).suit, discardPile.top().suit) ||
-						Objects.equals(hand.get(i).rank, Card.RANKS[8])) {
+				if (discardPile.isValidPlay(hand.get(i))) {
 					discardPile.add(this.hand.remove(i));
 					return this.hand.size() == 0;
 				}
