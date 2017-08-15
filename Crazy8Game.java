@@ -48,9 +48,9 @@ public class Crazy8Game {
 		for (int i = 0; i < RANDOM_PLAYERS; i++) {
 			players.add(new RandomPlayer(getNewHand(drawPile)));
 		}
-		for (int i = 0; i < EIGHTS_PLAYERS; i++) {
-			players.add(new MindTheEights(getNewHand(drawPile)));
-		}
+		//		for (int i = 0; i < EIGHTS_PLAYERS; i++) {
+		//			players.add(new MindTheEights(getNewHand(drawPile)));
+		//		}
 		for (int i = 0; i < HAMPER_PLAYERS; i++) {
 			players.add(new HamperLeader(getNewHand(drawPile)));
 		}
