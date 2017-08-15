@@ -27,6 +27,11 @@ public class Card implements Comparable<Card> {
 		}
 	}
 
+	static boolean isPowerCard(Card pickedCard) {
+		return pickedCard.getRank() == 2 || pickedCard.getRank() == 4 || pickedCard.getRank() == 7 ||
+				pickedCard.getRank() == 8;
+	}
+
 	/**
 	 * the numerical representation of the rank of the current card
 	 * <p>

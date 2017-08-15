@@ -29,29 +29,22 @@ public class ExtraCards extends Player {
 		if (nextPlayer.getSizeOfHand() == 1) {
 			// iterate through our hand until we find a power card, then play it.
 			for (int i = 0; i < getSizeOfHand(); i++) {
-				if (hand.get(i).getRank() == 2 || hand.get(i).getRank() == 4 || hand.get(i).getRank() == 7 ||
-						hand.get(i).getRank() == 8) {
-					// if it is a power card and it can be played, play it
-					if (discardPile.isValidPlay(hand.get(i))) {
-						discardPile.add(this.hand.remove(i));
-						// if our hand is empty, return true
-						return getSizeOfHand() == 0;
-					}
+				// if it is a power card and it can be played, play it
+				if (Card.isPowerCard(hand.get(i)) && discardPile.isValidPlay(hand.get(i))) {
+					discardPile.add(this.hand.remove(i));
+					// if our hand is empty, return true
+					return getSizeOfHand() == 0;
 				}
 			}
 
 			// if there in no power card in hand, pick up cards until we get one, then play it
 			while (!drawPile.isEmpty()) {
 				Card pickedCard = pickupCard(drawPile);
-				// check if the pickedCard is a power card
-				if (pickedCard.getRank() == 2 || pickedCard.getRank() == 4 || pickedCard.getRank() == 7 ||
-						pickedCard.getRank() == 8) {
-					// if it is a power card and it can be played, play it
-					if (discardPile.isValidPlay(pickedCard)) {
-						discardPile.add(this.hand.remove(getSizeOfHand() - 1));
-						// if our hand is empty, return true
-						return getSizeOfHand() == 0;
-					}
+				// if it is a power card and it can be played, play it
+				if (Card.isPowerCard(pickedCard) && discardPile.isValidPlay(pickedCard)) {
+					discardPile.add(this.hand.remove(getSizeOfHand() - 1));
+					// if our hand is empty, return true
+					return getSizeOfHand() == 0;
 				}
 			}
 		}
