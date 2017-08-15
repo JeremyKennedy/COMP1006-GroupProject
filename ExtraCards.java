@@ -23,32 +23,8 @@ public class ExtraCards extends Player {
     public boolean play(DiscardPile discardPile,Stack<Card> drawPile,ArrayList<Player> player) {
 
 
-        //gets the index of the next player
-        int indexOfNextPlayer = player.indexOf(player) + 1;
-        if (indexOfNextPlayer > player.size()) {
-            indexOfNextPlayer = 0;
-        }
-        //player checks if the discarded card by previous player is =2
 
-        //player checks if the discarded card is =4
-
-        //player checks if the discarded card is =8
-
-        //player checks if the discarded card is =8
-
-
-
-        //checks if the next player card size is equal to 1
-        if (player.get(indexOfNextPlayer).getSizeOfHand() == 1) {
-            //if its equal to one it will lunch ExtraCardss method
-            ExtraCardss(discardPile,drawPile, player);
-            //checks if its the winner
-            if (this.hand.size() == 0) {
-                return true;
-            }return false;}
-            //will check if the discarded card is similar to the card with the rank or suit
-        else if (player.get(indexOfNextPlayer).getSizeOfHand() >1) {
-            for (int i = 0; i < getSizeOfHand(); i++) {
+           for (int i = 0; i < getSizeOfHand(); i++) {
                 if (discardPile.top().getRank() == hand.get(i).getRank()) {
                     discardPile.add(this.hand.remove(i));
                     //checks if its the winner
@@ -83,7 +59,7 @@ public class ExtraCards extends Player {
                 return false;
             }
 
-        }
+
         return false;
     }
     // will pick cards until it gets the power card
@@ -98,7 +74,7 @@ public class ExtraCards extends Player {
                         if(this.hand.get(i).getSuit()==discardPile.top().getSuit()){
                             discardPile.add(this.hand.remove(i));
                            //return card 2
-                        return true;}
+                        return true;}continue;
                     }
                     //checks if power card number Jack exist is in hands
                     else if (hand.get(i).getRank() == 4) {
@@ -107,7 +83,7 @@ public class ExtraCards extends Player {
                             discardPile.add(this.hand.remove(i));
 
                         //return card 4
-                        return true;}
+                        return true;}continue;
                     }
                     //checks if power card number Jack exist is in hands
                     else if (hand.get(i).getRank() == 7) {
@@ -116,7 +92,7 @@ public class ExtraCards extends Player {
                             discardPile.add(this.hand.remove(i));
                             //return card 7
                             if( this.hand.size() == 0 ){return true;}
-                            return false;}
+                            return false;}continue;
                     }
                     //checks if power card number eight exist is in hands
                     else if (hand.get(i).getRank() == 8) {
@@ -128,42 +104,47 @@ public class ExtraCards extends Player {
                 // if there in no power card in hand
                 //pick card from pile until it gets the power cards
                 while (true) {
-                    
                     //
 
                     Card pickedcard = pickupCard(drawPile);
-                    
-                    //breaks the loopif the drawPile is empty
+                    //check the drawPile is a power card
                     if(drawPile.empty()){
                         break;
                     }
-                    //check the drawPile is a power card
-                    
                     if (pickedcard.getRank() == 2) {
                         //it will check if the top discarded card suit is the same as the new draw card suit
                         if (discardPile.top().getSuit() == pickedcard.getSuit()) {
                             discardPile.add(this.hand.remove(hand.size()-1));
                             break;
+                        }if(drawPile.empty()){
+                            return false;
                         }
                         continue;
                     } else if (pickedcard.getRank() == 4) {
                         //it will check if the top discarded card suit is the same as the new draw card suit
                         if (discardPile.top().getSuit() == pickedcard.getSuit()) {
                             discardPile.add(this.hand.remove(hand.size()-1));
-                            return true;
+                            break;
+                        }if(drawPile.empty()){
+                            return false;
                         }
                         continue;
                     } else if (pickedcard.getRank() == 7) {
                         //it will check if the top discarded card suit is the same as the new draw card suit
                         if (discardPile.top().getSuit() == pickedcard.getSuit()) {
                             discardPile.add(this.hand.remove(hand.size()-1));
-                            return true;
+                            break;
+                        }if(drawPile.empty()){
+                            return false;
                         }
                         continue;
                     } else if (pickedcard.getRank() == 8) {
                         discardPile.add(this.hand.remove(hand.size()-1));
-                        return true;
-                        }
+                            break;
+                        }if(drawPile.empty()){
+
+                        return false;
+                    }
                     // continue the loop until it gets the power cards
                     continue;
                 }
