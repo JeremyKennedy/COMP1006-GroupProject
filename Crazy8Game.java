@@ -98,6 +98,9 @@ public class Crazy8Game {
 					players.get(player).pickupCard(drawPile);
 					players.get(player).pickupCard(drawPile);
 					System.out.println("Their new hand: " + players.get(player));
+				} else if (newTopDiscard.getRank() == 4) {
+					player = (player + 1) % players.size();
+					System.out.printf("A four was played! Player %d is now skipping their turn...%n", player);
 				}
 			} else {
 				System.out.println("No card was played, player passed their turn.");
