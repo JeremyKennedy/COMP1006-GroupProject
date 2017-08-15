@@ -9,9 +9,7 @@ public class APlayer extends Player{
     ArrayList<Player> player = new ArrayList<>();
 	Player leader;
 
-	public APlayer(Card[] cards){
-		this.hand = new ArrayList<Card>(Arrays.asList(cards));
-		}
+	public APlayer(Card[] cards){ super(cards); }
  
   /* play a card */ 
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players)
