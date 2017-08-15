@@ -171,7 +171,7 @@ public class Crazy8Game {
 	}
 
 
-	private static int getNextPlayer() {
+	static int getNextPlayer() {
 		if (direction == -1 && player == 0) {  // prevents the current player from being negative,
 			player += playerCount;             // since floor division doesn't work as desired for negative numbers
 		}

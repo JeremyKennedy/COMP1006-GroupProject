@@ -22,8 +22,8 @@ public class ExtraCards extends Player {
 	@Override
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
 
-		// needs to actually get the nextPlayer, this is just temporary code
-		Player nextPlayer = players.get(0);
+		// get the player that's going after us
+		Player nextPlayer = players.get(Crazy8Game.getNextPlayer());
 
 		// if the next player has only one card left, we focus on power cards.
 		if (nextPlayer.getSizeOfHand() == 1) {
