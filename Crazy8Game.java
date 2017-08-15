@@ -67,7 +67,9 @@ public class Crazy8Game {
 		}
 
 		boolean win = false;
+		int playerCount = players.size();
 		int player = -1;    // start game with player 0
+		int direction = 1;  // 1 = forwards, -1 = backwards
 
 		discardPile.add(drawPile.pop());
 
@@ -75,7 +77,7 @@ public class Crazy8Game {
 		System.out.println("Discard pile is: " + discardPile);
 
 		while (!win) {
-			player = (player + 1) % players.size();
+			player = getNextPlayer(player, direction, playerCount);
 			System.out.println("\nIt is player " + player + "'s turn! [" + players.get(player).getClass() + "]");
 			System.out.println("Their hand: " + players.get(player));
 
@@ -92,7 +94,7 @@ public class Crazy8Game {
 			Card newTopDiscard = discardPile.top();
 			if (topDiscard != newTopDiscard) {
 				if (newTopDiscard.getRank() == 2) {
-					player = (player + 1) % players.size();
+					player = getNextPlayer(player, direction, playerCount);
 					System.out.printf(
 							"A two was played! Player %d is now picking up cards and skipping their turn...%n", player);
 					System.out.println("Their old hand: " + players.get(player));
@@ -100,8 +102,11 @@ public class Crazy8Game {
 					players.get(player).pickupCard(drawPile);
 					System.out.println("Their new hand: " + players.get(player));
 				} else if (newTopDiscard.getRank() == 4) {
-					player = (player + 1) % players.size();
+					player = getNextPlayer(player, direction, playerCount);
 					System.out.printf("A four was played! Player %d is now skipping their turn...%n", player);
+				} else if (newTopDiscard.getRank() == 7) {
+					System.out.println("A seven was played! Switching play direction...");
+					direction = direction * -1;
 				}
 			} else {
 				System.out.println("No card was played, player passed their turn.");
@@ -113,6 +118,13 @@ public class Crazy8Game {
 			//			}
 		}
 		System.out.println("\n--------------------\nWinner is player " + player + "!");
+	}
+
+	private static int getNextPlayer(int currentPlayer, int direction, int playerCount) {
+		if (direction == -1 && currentPlayer == 0) {  // prevents the current player from being negative,
+			currentPlayer += playerCount;             // since floor division doesn't work as desired for negative numbers
+		}
+		return (currentPlayer + direction) % playerCount;
 	}
 
 	private static Card[] getNewHand(Stack<Card> drawPile) {
