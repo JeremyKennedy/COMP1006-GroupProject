@@ -1,3 +1,13 @@
+/*
+Author Melaku 
+
+ExtraCards will risk taking cards from the draw pile in an effort to get power cards.
+They will be clever with this though. If the next player only has 1 card left,
+they will keep picking a card until they get a power card (if they do not already have one) 
+so that they can try to prevent the next player from winning. 
+They will not take more than one extra card in the early rounds of the game.
+They will not take extra cards if they already have power cards in their hand.
+*/
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Stack;
