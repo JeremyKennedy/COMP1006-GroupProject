@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Stack;
 
@@ -83,9 +84,9 @@ public class Crazy8Game {
 
 			win = players.get(player).play(discardPile, drawPile, players);
 
-			// topDraw = drawPile.isEmpty() ? new Card("None", "None") : drawPile.peek();
-			// System.out.println("Top of draw pile: " + topDraw);
-			// System.out.println("Top of discard pile: " + discardPile.top());
+			if (drawPile.isEmpty()) {
+				refillDrawPile(drawPile, discardPile);
+			}
 		}
 		System.out.println("\n--------------------\nWinner is player " + player + "!");
 	}
@@ -96,5 +97,14 @@ public class Crazy8Game {
 			hand[i] = drawPile.pop();
 		}
 		return hand;
+	}
+
+	public static void refillDrawPile(Stack<Card> drawPile, DiscardPile discardPile) {
+		System.out.println("\nDraw pile is empty, shuffling!");
+		Collections.shuffle(discardPile.cards);
+		Stack<Card> cards = discardPile.cards;
+		for (int i = 0; i < cards.size(); i++) {
+			drawPile.push(discardPile.cards.pop());
+		}
 	}
 }
