@@ -78,6 +78,7 @@ public class Crazy8Game {
 		// calculates and displays points
 		int points = 0;
 		int highestPoints = 0;
+		int highestPlayer = -1;
 		for (Player player_ : players) {      // named "player_" because "player" was taken
 			for (Card card : player_.hand) {
 				points += card.getPoints();
@@ -89,6 +90,7 @@ public class Crazy8Game {
 		for (int i = 0; i < players.size(); i++) {
 			if (players.get(i).points > highestPoints) {
 				highestPoints = players.get(i).points;
+				highestPlayer = i;
 			}
 			System.out.printf("Player %d's total points: %d%n", i, players.get(i).points);
 		}
@@ -97,6 +99,8 @@ public class Crazy8Game {
 			resetDrawAndDiscard();
 			dealCardsToPlayers();
 			startGame();
+		} else {
+			System.out.printf("Game over! Player %d has won the game with %d points!%n", highestPlayer, highestPoints);
 		}
 	}
 
