@@ -117,7 +117,15 @@ public class Crazy8Game {
 			//				refillDrawPile(drawPile, discardPile);
 			//			}
 		}
-		System.out.println("\n--------------------\nWinner is player " + player + "!");
+
+		int points = 0;
+		for (Player player_ : players) {      // named "player_" because "player" was taken
+			for (Card card : player_.hand) {
+				points += card.getPoints();
+			}
+		}
+		System.out.printf("--------------------\n\nWinner is player %d, with %d points!%n", player, points);
+
 	}
 
 	private static int getNextPlayer(int currentPlayer, int direction, int playerCount) {
