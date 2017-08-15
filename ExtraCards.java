@@ -110,60 +110,22 @@ public class ExtraCards extends Player {
 			}
 		}
 
-		// if there in no power card in hand
-		//pick card from pile until it gets the power cards
-		while (true) {
-			//
-
-			Card pickedcard = pickupCard(drawPile);
-			//check the drawPile is a power card
-			if (drawPile.empty()) {
-				break;
-			}
-			if (pickedcard.getRank() == 2) {
-				//it will check if the top discarded card suit is the same as the new draw card suit
-				if (discardPile.top().getSuit() == pickedcard.getSuit()) {
+		// if there in no power card in hand, pick up cards until we get one
+		while (!drawPile.isEmpty()) {
+			Card pickedCard = pickupCard(drawPile);
+			// check if the pickedCard is a power card
+			if (pickedCard.getRank() == 2 || pickedCard.getRank() == 4 || pickedCard.getRank() == 7 ||
+					pickedCard.getRank() == 8) {
+				// if it is a power card and it can be played, play it
+				if (discardPile.isValidPlay(pickedCard)) {
 					discardPile.add(this.hand.remove(hand.size() - 1));
-					break;
+					// if our hand is empty, return true
+					return this.hand.size() == 0;
 				}
-				if (drawPile.empty()) {
-					return false;
-				}
-				continue;
-			} else if (pickedcard.getRank() == 4) {
-				//it will check if the top discarded card suit is the same as the new draw card suit
-				if (discardPile.top().getSuit() == pickedcard.getSuit()) {
-					discardPile.add(this.hand.remove(hand.size() - 1));
-					break;
-				}
-				if (drawPile.empty()) {
-					return false;
-				}
-				continue;
-			} else if (pickedcard.getRank() == 7) {
-				//it will check if the top discarded card suit is the same as the new draw card suit
-				if (discardPile.top().getSuit() == pickedcard.getSuit()) {
-					discardPile.add(this.hand.remove(hand.size() - 1));
-					break;
-				}
-				if (drawPile.empty()) {
-					return false;
-				}
-				continue;
-			} else if (pickedcard.getRank() == 8) {
-				discardPile.add(this.hand.remove(hand.size() - 1));
-				break;
 			}
-			if (drawPile.empty()) {
-
-				return false;
-			}
-			// continue the loop until it gets the power cards
-			continue;
 		}
-
-		// return false if player doesn't left with one card
-		return false;
+		// if our hand is empty, return true
+		return this.hand.size() == 0;
 	}
 }
 

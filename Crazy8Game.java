@@ -3,12 +3,12 @@ import java.util.Collections;
 import java.util.Stack;
 
 public class Crazy8Game {
-	static final int BAD_PLAYERS = 3;       // BadPlayer
+	static final int BAD_PLAYERS = 0;       // BadPlayer
 	static final int RANDOM_PLAYERS = 0;    // RandomPlayer
 	static final int EIGHTS_PLAYERS = 0;    // MindTheEights
 	static final int HAMPER_PLAYERS = 0;    // HamperLeader
 	static final int HIGH_PLAYERS = 1;      // DiscardHighPoints
-	static final int EXTRA_PLAYERS = 0;     // ExtraCards
+	static final int EXTRA_PLAYERS = 2;     // ExtraCards
 
 	static final int POINTS_GOAL = 500;     // set to 0 for single round games, otherwise set point limit for multiple round games
 
