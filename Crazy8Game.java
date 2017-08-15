@@ -84,9 +84,9 @@ public class Crazy8Game {
 
 			win = players.get(player).play(discardPile, drawPile, players);
 
-			if (drawPile.isEmpty()) {
-				refillDrawPile(drawPile, discardPile);
-			}
+//			if (drawPile.isEmpty()) {
+//				refillDrawPile(drawPile, discardPile);
+//			}
 		}
 		System.out.println("\n--------------------\nWinner is player " + player + "!");
 	}
