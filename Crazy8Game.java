@@ -78,11 +78,31 @@ public class Crazy8Game {
 			player = (player + 1) % players.size();
 			System.out.println("\nIt is player " + player + "'s turn! [" + players.get(player).getClass() + "]");
 			System.out.println("Their hand: " + players.get(player));
+
+			Card topDiscard = discardPile.top();
+			System.out.println("Top of discard pile: " + topDiscard);
+
 			Card topDraw = drawPile.isEmpty() ? new Card("None", "None") : drawPile.peek();
-			System.out.println("Top of discard pile: " + discardPile.top());
 			System.out.println("Top of draw pile: " + topDraw);
 
 			win = players.get(player).play(discardPile, drawPile, players);
+
+			System.out.println("Their new hand: " + players.get(player));
+
+			Card newTopDiscard = discardPile.top();
+			if (topDiscard != newTopDiscard) {
+				if (newTopDiscard.getRank() == 2) {
+					player = (player + 1) % players.size();
+					System.out.printf("A two was played! Player %d is now picking up cards and skipping their turn...%n", player);
+					System.out.println("Their old hand: " + players.get(player));
+					players.get(player).pickupCard(drawPile);
+					players.get(player).pickupCard(drawPile);
+					System.out.println("Their new hand: " + players.get(player));
+				}
+			} else {
+				System.out.println("No card was played, player passed their turn.");
+			}
+
 
 //			if (drawPile.isEmpty()) {
 //				refillDrawPile(drawPile, discardPile);
