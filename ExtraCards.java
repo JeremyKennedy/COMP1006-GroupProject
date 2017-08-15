@@ -74,6 +74,7 @@ public class ExtraCards extends Player {
 		}
 
 		// if we couldn't pick up a playable card, we must pass
+		System.out.println("Passing!");
 		return getSizeOfHand() == 0;
 	}
 }
