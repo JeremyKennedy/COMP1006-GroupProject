@@ -14,13 +14,13 @@ public class ExtraCards extends Player {
         if (indexOfNextPlayer > player.size()) {
             indexOfNextPlayer = 0;
         }
-        //player checks if the discarded card is =2
+        //player checks if the discarded cardby previous player is =2
 
-        //player checks if the discarded card is =4
+        //player checks if the discarded cardby previous player is =4
 
-        //player checks if the discarded card is =8
+        //player checks if the discarded cardby previous player is =8
 
-        //player checks if the discarded card is =8
+        //player checks if the discarded cardby previous player is =8
 
 
 
