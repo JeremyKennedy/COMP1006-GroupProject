@@ -4,80 +4,43 @@ import java.util.Random;
 import java.util.Stack;
 
 public class Crazy8Game {
+	static final int BAD_PLAYERS = 3;       // BadPlayer
+	static final int RANDOM_PLAYERS = 0;    // RandomPlayer
+	static final int EIGHTS_PLAYERS = 0;    // MindTheEights
+	static final int HAMPER_PLAYERS = 0;    // HamperLeader
+	static final int HIGH_PLAYERS = 1;      // DiscardHighPoints
+	static final int EXTRA_PLAYERS = 0;     // ExtraCards
+
+	static final int POINTS_GOAL = 500;     // set to 0 for single round games, otherwise set point limit for multiple round games
+
+	static final Card[] deck = createDeck();
+
+	static boolean win;
+	static DiscardPile discardPile;
+	static Stack<Card> drawPile;
+	static ArrayList<Player> players;
+	static int playerCount;
+	static int player;                      // start game with player 0
+	static int direction;                   // 1 = forwards, -1 = backwards
 
 	public static void main(String[] args) {
-		int BAD_PLAYERS = 3;     // BadPlayer
-		int RANDOM_PLAYERS = 0;  // RandomPlayer
-		int EIGHTS_PLAYERS = 0;  // MindTheEights
-		int HAMPER_PLAYERS = 0;  // HamperLeader
-		int HIGH_PLAYERS = 1;    // DiscardHighPoints
-		int EXTRA_PLAYERS = 0;   // ExtraCards
+		createPlayers();
 
+		resetDrawAndDiscard();
+		dealCardsToPlayers();
+		startGame();
+	}
 
-		/* create the deck */
-		Card[] deck = new Card[52];
-		int index = 0;
-		for (int r = 2; r <= 14; r += 1) {
-			for (int s = 0; s < 4; s += 1) {
-				deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
-			}
-		}
-		
-		/* shuffle the deck */
-		Random rnd = new Random();
-		Card swap;
-		for (int i = deck.length - 1; i >= 0; i = i - 1) {
-			int pos = rnd.nextInt(i + 1);
-			swap = deck[pos];
-			deck[pos] = deck[i];
-			deck[i] = swap;
-		}		
-
-		/* discard and draw piles */
-		DiscardPile discardPile = new DiscardPile();
-		Stack<Card> drawPile = new Stack<>();
-		for (Card card : deck) {
-			drawPile.push(card);
-		}
-		deck = null;
-
-		/* players in the game */
-		ArrayList<Player> players = new ArrayList<>();
-		for (int i = 0; i < BAD_PLAYERS; i++) {
-			players.add(new BadPlayer(getNewHand(drawPile)));
-		}
-		for (int i = 0; i < RANDOM_PLAYERS; i++) {
-			players.add(new RandomPlayer(getNewHand(drawPile)));
-		}
-		//		for (int i = 0; i < EIGHTS_PLAYERS; i++) {
-		//			players.add(new MindTheEights(getNewHand(drawPile)));
-		//		}
-		for (int i = 0; i < HAMPER_PLAYERS; i++) {
-			players.add(new HamperLeader(getNewHand(drawPile)));
-		}
-		for (int i = 0; i < HIGH_PLAYERS; i++) {
-			players.add(new DiscardHighPoints(getNewHand(drawPile)));
-		}
-		for (int i = 0; i < EXTRA_PLAYERS; i++) {
-			players.add(new ExtraCards(getNewHand(drawPile)));
-		}
-		for (int i = 0; i < players.size(); i++) {
-			System.out.println("[" + players.get(i).getClass() + "] " + "Player " + i + "'s hand: " + players.get(i));
-
-		}
-
-		boolean win = false;
-		int playerCount = players.size();
-		int player = -1;    // start game with player 0
-		int direction = 1;  // 1 = forwards, -1 = backwards
-
-		discardPile.add(drawPile.pop());
+	private static void startGame() {
+		win = false;
+		player = -1;    // start game with player 0
+		direction = 1;  // 1 = forwards, -1 = backwards
 
 		System.out.println("Draw pile is: " + drawPile);
 		System.out.println("Discard pile is: " + discardPile);
 
 		while (!win) {
-			player = getNextPlayer(player, direction, playerCount);
+			player = getNextPlayer();
 			System.out.println("\nIt is player " + player + "'s turn! [" + players.get(player).getClass() + "]");
 			System.out.println("Their hand: " + players.get(player));
 
@@ -94,7 +57,7 @@ public class Crazy8Game {
 			Card newTopDiscard = discardPile.top();
 			if (topDiscard != newTopDiscard) {
 				if (newTopDiscard.getRank() == 2) {
-					player = getNextPlayer(player, direction, playerCount);
+					player = getNextPlayer();
 					System.out.printf(
 							"A two was played! Player %d is now picking up cards and skipping their turn...%n", player);
 					System.out.println("Their old hand: " + players.get(player));
@@ -102,7 +65,7 @@ public class Crazy8Game {
 					players.get(player).pickupCard(drawPile);
 					System.out.println("Their new hand: " + players.get(player));
 				} else if (newTopDiscard.getRank() == 4) {
-					player = getNextPlayer(player, direction, playerCount);
+					player = getNextPlayer();
 					System.out.printf("A four was played! Player %d is now skipping their turn...%n", player);
 				} else if (newTopDiscard.getRank() == 7) {
 					System.out.println("A seven was played! Switching play direction...");
@@ -118,7 +81,9 @@ public class Crazy8Game {
 			//			}
 		}
 
+		// calculates and displays points
 		int points = 0;
+		int highestPoints = 0;
 		for (Player player_ : players) {      // named "player_" because "player" was taken
 			for (Card card : player_.hand) {
 				points += card.getPoints();
@@ -128,27 +93,102 @@ public class Crazy8Game {
 		System.out.printf("--------------------\n\nWinner is player %d, with %d points this round!%n", player, points);
 		System.out.println("\nLEADERBOARD:");
 		for (int i = 0; i < players.size(); i++) {
+			if (players.get(i).points > highestPoints) {
+				highestPoints = players.get(i).points;
+			}
 			System.out.printf("Player %d's total points: %d%n", i, players.get(i).points);
 		}
-
-	}
-
-	private static int getNextPlayer(int currentPlayer, int direction, int playerCount) {
-		if (direction == -1 && currentPlayer == 0) {  // prevents the current player from being negative,
-			currentPlayer += playerCount;             // since floor division doesn't work as desired for negative numbers
+		System.out.println("\n--------------------\n");
+		if (highestPoints < POINTS_GOAL) {
+			resetDrawAndDiscard();
+			dealCardsToPlayers();
+			startGame();
 		}
-		return (currentPlayer + direction) % playerCount;
 	}
 
-	private static Card[] getNewHand(Stack<Card> drawPile) {
-		Card[] hand = new Card[5];
+	private static void createPlayers() {
+		players = new ArrayList<>();
+		for (int i = 0; i < BAD_PLAYERS; i++) {
+			players.add(new BadPlayer(new Card[]{}));
+		}
+		for (int i = 0; i < RANDOM_PLAYERS; i++) {
+			players.add(new RandomPlayer(new Card[]{}));
+		}
+		//		for (int i = 0; i < EIGHTS_PLAYERS; i++) {
+		//			players.add(new MindTheEights(new Card[]{})));
+		//		}
+		for (int i = 0; i < HAMPER_PLAYERS; i++) {
+			players.add(new HamperLeader(new Card[]{}));
+		}
+		for (int i = 0; i < HIGH_PLAYERS; i++) {
+			players.add(new DiscardHighPoints(new Card[]{}));
+		}
+		for (int i = 0; i < EXTRA_PLAYERS; i++) {
+			players.add(new ExtraCards(new Card[]{}));
+		}
+
+		;
+		playerCount = players.size();
+	}
+
+	private static void resetDrawAndDiscard() {
+		discardPile = new DiscardPile();
+		drawPile = new Stack<>();
+		for (Card card : deck) {
+			drawPile.push(card);
+		}
+		Collections.shuffle(drawPile);
+		discardPile.add(drawPile.pop());
+
+	}
+
+	private static void dealCardsToPlayers() {
+		for (int i = 0; i < players.size(); i++) {
+			players.get(i).hand = getNewHand();
+			System.out.println("[" + players.get(i).getClass() + "] " + "Player " + i + "'s hand: " + players.get(i));
+		}
+	}
+
+	private static ArrayList<Card> getNewHand() {
+		ArrayList<Card> hand = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-			hand[i] = drawPile.pop();
+			hand.add(drawPile.pop());
 		}
 		return hand;
 	}
 
-	public static void refillDrawPile(Stack<Card> drawPile, DiscardPile discardPile) {
+
+	private static int getNextPlayer() {
+		if (direction == -1 && player == 0) {  // prevents the current player from being negative,
+			player += playerCount;             // since floor division doesn't work as desired for negative numbers
+		}
+		return (player + direction) % playerCount;
+	}
+
+
+	private static Card[] createDeck() {
+		/* create the deck */
+		Card[] deck = new Card[52];
+		int index = 0;
+		for (int r = 2; r <= 14; r += 1) {
+			for (int s = 0; s < 4; s += 1) {
+				deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
+			}
+		}
+
+		/* shuffle the deck */
+		Random rnd = new Random();
+		Card swap;
+		for (int i = deck.length - 1; i >= 0; i = i - 1) {
+			int pos = rnd.nextInt(i + 1);
+			swap = deck[pos];
+			deck[pos] = deck[i];
+			deck[i] = swap;
+		}
+		return deck;
+	}
+
+	public static void refillDrawPile() {
 		System.out.println("\nDraw pile is empty, shuffling!");
 		Collections.shuffle(discardPile.cards);
 		Stack<Card> cards = discardPile.cards;
