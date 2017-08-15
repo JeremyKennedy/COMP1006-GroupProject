@@ -75,7 +75,7 @@ public class Crazy8Game {
 
 		while (!win) {
 			player = (player + 1) % players.size();
-			System.out.println("\nIt is player " + player + "'s turn!");
+			System.out.println("\nIt is player " + player + "'s turn! [" + players.get(player).getClass() + "]");
 			System.out.println("Their hand: " + players.get(player));
 			Card topDraw = drawPile.isEmpty() ? new Card("None", "None") : drawPile.peek();
 			System.out.println("Top of draw pile: " + topDraw);
