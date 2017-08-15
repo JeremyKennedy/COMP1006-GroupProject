@@ -25,29 +25,8 @@ public class ExtraCards extends Player {
 		// needs to actually get the nextPlayer, this is just temporary code
 		Player nextPlayer = players.get(0);
 
-		// if the next player has more than one card left, play normally
-		if (nextPlayer.getSizeOfHand() > 1) {
-			// iterate through our hand until we find a card that can be played, then play it
-			for (int i = 0; i < getSizeOfHand(); i++) {
-				// if it can be played, play it
-				if (discardPile.isValidPlay(hand.get(i))) {
-					discardPile.add(this.hand.remove(i));
-					// if our hand is empty, return true
-					return getSizeOfHand() == 0;
-				}
-			}
-			// if we can't find a playable card, pick up cards until we find one
-			while (!drawPile.isEmpty()) {
-				Card pickedCard = pickupCard(drawPile);
-				// if it can be played, play it
-				if (discardPile.isValidPlay(pickedCard)) {
-					discardPile.add(this.hand.remove(getSizeOfHand() - 1));
-					// if our hand is empty, return true
-					return getSizeOfHand() == 0;
-				}
-			}
 		// if the next player has only one card left, we focus on power cards.
-		} else if (nextPlayer.getSizeOfHand() == 1) {
+		if (nextPlayer.getSizeOfHand() == 1) {
 			// iterate through our hand until we find a power card, then play it.
 			for (int i = 0; i < getSizeOfHand(); i++) {
 				if (hand.get(i).getRank() == 2 || hand.get(i).getRank() == 4 || hand.get(i).getRank() == 7 ||
@@ -75,6 +54,30 @@ public class ExtraCards extends Player {
 					}
 				}
 			}
+		}
+
+		// if we reach this point it either means we couldn't find a power card, or
+		// the next player has more than one card left, and we should play normally
+
+		// iterate through our hand until we find a card that can be played, then play it
+		for (int i = 0; i < getSizeOfHand(); i++) {
+			// if it can be played, play it
+			if (discardPile.isValidPlay(hand.get(i))) {
+				discardPile.add(this.hand.remove(i));
+				// if our hand is empty, return true
+				return getSizeOfHand() == 0;
+			}
+		}
+		// if we can't find a playable card, pick up cards until we find one
+		while (!drawPile.isEmpty()) {
+			Card pickedCard = pickupCard(drawPile);
+			// if it can be played, play it
+			if (discardPile.isValidPlay(pickedCard)) {
+				discardPile.add(this.hand.remove(getSizeOfHand() - 1));
+				// if our hand is empty, return true
+				return getSizeOfHand() == 0;
+			}
+
 		}
 
 		// if we couldn't pick up a playable card, we must pass
