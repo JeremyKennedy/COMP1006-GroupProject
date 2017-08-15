@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.Stack;
 
 public abstract class Player {
+	public int points;  // represents count of points from winning games
 	protected ArrayList<Card> hand;
 
 	public Player(Card[] cards) {

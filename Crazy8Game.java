@@ -124,7 +124,12 @@ public class Crazy8Game {
 				points += card.getPoints();
 			}
 		}
-		System.out.printf("--------------------\n\nWinner is player %d, with %d points!%n", player, points);
+		players.get(player).points += points;
+		System.out.printf("--------------------\n\nWinner is player %d, with %d points this round!%n", player, points);
+		System.out.println("\nLEADERBOARD:");
+		for (int i = 0; i < players.size(); i++) {
+			System.out.printf("Player %d's total points: %d%n", i, players.get(i).points);
+		}
 
 	}
 
