@@ -10,7 +10,7 @@ public class Crazy8Game {
 		int RANDOM_PLAYERS = 0;  // RandomPlayer
 		int EIGHTS_PLAYERS = 0;  // MindTheEights
 		int HAMPER_PLAYERS = 0;  // HamperLeader
-		int HIGH_PLAYERS = 0;    // DiscardHighPoints
+		int HIGH_PLAYERS = 1;    // DiscardHighPoints
 		int EXTRA_PLAYERS = 0;   // ExtraCards
 
 
@@ -93,7 +93,8 @@ public class Crazy8Game {
 			if (topDiscard != newTopDiscard) {
 				if (newTopDiscard.getRank() == 2) {
 					player = (player + 1) % players.size();
-					System.out.printf("A two was played! Player %d is now picking up cards and skipping their turn...%n", player);
+					System.out.printf(
+							"A two was played! Player %d is now picking up cards and skipping their turn...%n", player);
 					System.out.println("Their old hand: " + players.get(player));
 					players.get(player).pickupCard(drawPile);
 					players.get(player).pickupCard(drawPile);
@@ -107,9 +108,9 @@ public class Crazy8Game {
 			}
 
 
-//			if (drawPile.isEmpty()) {
-//				refillDrawPile(drawPile, discardPile);
-//			}
+			//			if (drawPile.isEmpty()) {
+			//				refillDrawPile(drawPile, discardPile);
+			//			}
 		}
 		System.out.println("\n--------------------\nWinner is player " + player + "!");
 	}
