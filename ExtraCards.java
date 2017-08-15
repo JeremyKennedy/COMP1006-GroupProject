@@ -4,7 +4,7 @@ import java.util.Stack;
 
 
 public class ExtraCards extends Player {
-    public ExtraCards(Card[] cards){this.hand = new ArrayList<Card>(Arrays.asList(cards));}
+    public ExtraCards(Card[] cards){ super(cards); }
     @Override
     public boolean play(DiscardPile discardPile,Stack<Card> drawPile,ArrayList<Player> player) {
 
