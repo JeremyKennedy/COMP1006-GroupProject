@@ -1,3 +1,5 @@
+// Author: Carson
+
 import java.util.Arrays;
 
 public class MindTheEights extends Player{
