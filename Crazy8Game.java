@@ -73,7 +73,7 @@ public class Crazy8Game {
 					System.out.println("A seven was played! Switching play direction...");
 					direction = direction * -1;
 				}
-			} else if (consecutivePasses >= 4) {
+			} else if (consecutivePasses >= playerCount - 1) {
 				System.out.println("--------------------\n");
 				System.out.println("No one can play, and the draw pile is empty. Tie game! Resetting...");
 				emptyPlayersHands();
