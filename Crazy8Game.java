@@ -36,8 +36,8 @@ public class Crazy8Game {
 		/* discard and draw piles */
 		DiscardPile discardPile = new DiscardPile();
 		Stack<Card> drawPile = new Stack<>();
-		for (int i = 0; i < deck.length; i++) {
-			drawPile.push(deck[i]);
+		for (Card card : deck) {
+			drawPile.push(card);
 		}
 		deck = null;
 

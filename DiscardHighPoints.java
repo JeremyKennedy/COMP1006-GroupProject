@@ -15,7 +15,7 @@ public class DiscardHighPoints extends Player {
 
 	@Override
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
-		// go through all cards in the hand, and play the first valid one
+		// sort the hand by points, then go through all cards in the hand, and play the first valid one
 		while (true) {
 			Collections.sort(hand);
 			for (int i = hand.size() - 1; i >= 0; i--) {
