@@ -64,7 +64,9 @@ public class Card implements Comparable<Card> {
 
 	@Override
 	public int compareTo(Card other) {
-		return 0;
+		int thisPoints = getPoints();
+		int otherPoints = other.getPoints();
+		return Integer.compare(thisPoints, otherPoints);
 	}
 
 	@Override
