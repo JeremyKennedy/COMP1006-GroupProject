@@ -18,10 +18,10 @@ public class DiscardHighPoints extends Player {
 		// sort the hand by points, then go through all cards in the hand, and play the first valid one
 		while (true) {
 			Collections.sort(hand);
-			for (int i = hand.size() - 1; i >= 0; i--) {
+			for (int i = getSizeOfHand() - 1; i >= 0; i--) {
 				if (discardPile.isValidPlay(hand.get(i))) {
 					discardPile.add(this.hand.remove(i));
-					return this.hand.size() == 0;
+					return getSizeOfHand() == 0;
 				}
 			}
 
@@ -31,7 +31,7 @@ public class DiscardHighPoints extends Player {
 			} else {
 				// nothing left to do, so pass
 				System.out.println("Passing!");
-				return this.hand.size() == 0;
+				return getSizeOfHand() == 0;
 			}
 		}
 	}

@@ -33,7 +33,7 @@ public class ExtraCards extends Player {
 				if (discardPile.isValidPlay(hand.get(i))) {
 					discardPile.add(this.hand.remove(i));
 					// if our hand is empty, return true
-					return this.hand.size() == 0;
+					return getSizeOfHand() == 0;
 				}
 			}
 			// if we can't find a playable card, pick up cards until we find one
@@ -41,22 +41,22 @@ public class ExtraCards extends Player {
 				Card pickedCard = pickupCard(drawPile);
 				// if it can be played, play it
 				if (discardPile.isValidPlay(pickedCard)) {
-					discardPile.add(this.hand.remove(hand.size() - 1));
+					discardPile.add(this.hand.remove(getSizeOfHand() - 1));
 					// if our hand is empty, return true
-					return this.hand.size() == 0;
+					return getSizeOfHand() == 0;
 				}
 			}
 		// if the next player has only one card left, we focus on power cards.
 		} else if (nextPlayer.getSizeOfHand() == 1) {
 			// iterate through our hand until we find a power card, then play it.
-			for (int i = 0; i < hand.size(); i++) {
+			for (int i = 0; i < getSizeOfHand(); i++) {
 				if (hand.get(i).getRank() == 2 || hand.get(i).getRank() == 4 || hand.get(i).getRank() == 7 ||
 						hand.get(i).getRank() == 8) {
 					// if it is a power card and it can be played, play it
 					if (discardPile.isValidPlay(hand.get(i))) {
 						discardPile.add(this.hand.remove(i));
 						// if our hand is empty, return true
-						return this.hand.size() == 0;
+						return getSizeOfHand() == 0;
 					}
 				}
 			}
@@ -69,16 +69,16 @@ public class ExtraCards extends Player {
 						pickedCard.getRank() == 8) {
 					// if it is a power card and it can be played, play it
 					if (discardPile.isValidPlay(pickedCard)) {
-						discardPile.add(this.hand.remove(hand.size() - 1));
+						discardPile.add(this.hand.remove(getSizeOfHand() - 1));
 						// if our hand is empty, return true
-						return this.hand.size() == 0;
+						return getSizeOfHand() == 0;
 					}
 				}
 			}
 		}
 
 		// if we couldn't pick up a playable card, we must pass
-		return this.hand.size() == 0;
+		return getSizeOfHand() == 0;
 	}
 }
 

@@ -11,10 +11,10 @@ public class BadPlayer extends Player {
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
 		// go through all cards in the hand, and play the first valid one
 		while (true) {
-			for (int i = 0; i < hand.size(); i++) {
+			for (int i = 0; i < getSizeOfHand(); i++) {
 				if (discardPile.isValidPlay(hand.get(i))) {
 					discardPile.add(this.hand.remove(i));
-					return this.hand.size() == 0;
+					return getSizeOfHand() == 0;
 				}
 			}
 
@@ -24,7 +24,7 @@ public class BadPlayer extends Player {
 			} else {
 				// nothing left to do, so pass
 				System.out.println("Passing!");
-				return this.hand.size() == 0;
+				return getSizeOfHand() == 0;
 			}
 		}
 	}
