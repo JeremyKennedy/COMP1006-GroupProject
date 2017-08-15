@@ -7,9 +7,9 @@ public class Crazy8Game {
 	public static void main(String[] args) {
 		int BAD_PLAYERS = 3;     // BadPlayer
 		int RANDOM_PLAYERS = 1;  // RandomPlayer
-		int EIGHTS_PLAYERS = 1;  // MindTheEights
-		int HAMPER_PLAYERS = 1;  // HamperLeader
-		int HIGH_PLAYERS = 1;    // DiscardHighPoints
+		int EIGHTS_PLAYERS = 0;  // MindTheEights
+		int HAMPER_PLAYERS = 0;  // HamperLeader
+		int HIGH_PLAYERS = 0;    // DiscardHighPoints
 		int EXTRA_PLAYERS = 1;   // ExtraCards
 
 
@@ -45,18 +45,18 @@ public class Crazy8Game {
 		for (int i = 0; i < BAD_PLAYERS; i++) {
 			players.add(new BadPlayer(getNewHand(drawPile)));
 		}
-		//		for (int i = 0; i < RANDOM_PLAYERS; i++) {
-		//			players.add(new RandomPlayer(getNewHand(drawPile)));
-		//		}
-		//		for (int i = 0; i < EIGHTS_PLAYERS; i++) {
-		//			players.add(new MindTheEights(getNewHand(drawPile)));
-		//		}
-		//		for (int i = 0; i < HAMPER_PLAYERS; i++) {
-		//			players.add(new HamperLeader(getNewHand(drawPile)));
-		//		}
-		//		for (int i = 0; i < HIGH_PLAYERS; i++) {
-		//			players.add(new DiscardHighPoints(getNewHand(drawPile)));
-		//		}
+		for (int i = 0; i < RANDOM_PLAYERS; i++) {
+			players.add(new RandomPlayer(getNewHand(drawPile)));
+		}
+		for (int i = 0; i < EIGHTS_PLAYERS; i++) {
+			players.add(new MindTheEights(getNewHand(drawPile)));
+		}
+		for (int i = 0; i < HAMPER_PLAYERS; i++) {
+			players.add(new HamperLeader(getNewHand(drawPile)));
+		}
+		for (int i = 0; i < HIGH_PLAYERS; i++) {
+			players.add(new DiscardHighPoints(getNewHand(drawPile)));
+		}
 		for (int i = 0; i < EXTRA_PLAYERS; i++) {
 			players.add(new ExtraCards(getNewHand(drawPile)));
 		}

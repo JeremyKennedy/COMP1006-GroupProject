@@ -1,8 +1,13 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 public abstract class Player {
 	protected ArrayList<Card> hand;
+
+	public Player(Card[] cards) {
+		this.hand = new ArrayList<>(Arrays.asList(cards));
+	}
 
 	public int getSizeOfHand() {
 		return hand.size();

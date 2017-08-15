@@ -1,12 +1,11 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Stack;
 
 public class BadPlayer extends Player {
 
 	public BadPlayer(Card[] cards) {
-		this.hand = new ArrayList<>(Arrays.asList(cards));
+		super(cards);
 	}
 
 	/* play a card */
