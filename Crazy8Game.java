@@ -12,7 +12,7 @@ public class Crazy8Game {
 	static int HAMPER_PLAYERS;    // HamperLeader
 	static int HIGH_PLAYERS;      // DiscardHighPoints
 	static int EXTRA_PLAYERS;     // ExtraCards
-	static int POINTS_GOAL = 1;     // set to 0 for single round games, otherwise set point limit for multiple round games
+	static int POINTS_GOAL = 250;     // set to 0 for single round games, otherwise set point limit for multiple round games
 
 	static int currentRound = 0;
 	static boolean win;
@@ -25,6 +25,7 @@ public class Crazy8Game {
 
 	public static void main(String[] args) {
 		if (args.length > 0) {
+			POINTS_GOAL = 1;
 			if (Objects.equals(args[0], "eights")) {
 				EIGHTS_PLAYERS = 1;    // MindTheEights
 				RANDOM_PLAYERS = 2;    // RandomPlayer
@@ -45,7 +46,6 @@ public class Crazy8Game {
 			HAMPER_PLAYERS = 1;    // HamperLeader
 			HIGH_PLAYERS = 1;      // DiscardHighPoints
 			EXTRA_PLAYERS = 1;     // ExtraCards
-			POINTS_GOAL = 2000;
 		}
 		createPlayers();
 
