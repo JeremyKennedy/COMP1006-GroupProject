@@ -17,6 +17,7 @@ public class ExtraCards extends Player {
 
 	public ExtraCards(Card[] cards) {
 		super(cards);
+		this.type = "ExtraCards";
 	}
 
 	@Override

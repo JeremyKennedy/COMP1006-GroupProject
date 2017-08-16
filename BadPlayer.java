@@ -5,6 +5,7 @@ public class BadPlayer extends Player {
 
 	public BadPlayer(Card[] cards) {
 		super(cards);
+		this.type = "BadPlayer";
 	}
 
 	/* play a card */

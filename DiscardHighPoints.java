@@ -11,6 +11,7 @@ import java.util.Stack;
 public class DiscardHighPoints extends Player {
 	public DiscardHighPoints(Card[] cards) {
 		super(cards);
+		this.type = "DiscardHighPoints";
 	}
 
 	@Override

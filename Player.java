@@ -2,6 +2,7 @@ import java.util.*;
 
 public abstract class Player {
 	public int points;  // represents count of points from winning games
+	public String type;
 	protected ArrayList<Card> hand;
 
 	public Player(Card[] cards) {

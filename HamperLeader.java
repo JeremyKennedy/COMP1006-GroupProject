@@ -8,6 +8,7 @@ public class HamperLeader extends Player {
 
 	public HamperLeader(Card[] cards) {
 		super(cards);
+		this.type = "HamperLeader";
 	}
 
 	/* play a card */

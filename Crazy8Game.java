@@ -44,7 +44,7 @@ public class Crazy8Game {
 
 		while (!win && !tie) {
 			player = getNextPlayer();
-			System.out.println("\nIt is player " + player + "'s turn! [" + players.get(player).getClass() + "]");
+			System.out.println("\nIt is player " + player + "'s turn! [" + players.get(player).type + "]");
 			System.out.println("Their hand: " + players.get(player));
 
 			Card topDiscard = discardPile.top();
@@ -107,7 +107,7 @@ public class Crazy8Game {
 				highestPoints = players.get(i).points;
 				highestPlayer = i;
 			}
-			System.out.printf("Player %d's total points: %d%n", i, players.get(i).points);
+			System.out.printf("[%s] Player %d's total points: %d%n", players.get(i).type, i, players.get(i).points);
 		}
 		System.out.println("\n--------------------\n");
 		if (highestPoints < POINTS_GOAL) {
@@ -156,7 +156,7 @@ public class Crazy8Game {
 	private static void dealCardsToPlayers() {
 		for (int i = 0; i < players.size(); i++) {
 			players.get(i).hand = getNewHand();
-			System.out.println("[" + players.get(i).getClass() + "] " + "Player " + i + "'s hand: " + players.get(i));
+			System.out.println("[" + players.get(i).type + "] " + "Player " + i + "'s hand: " + players.get(i));
 		}
 	}
 
