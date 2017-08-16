@@ -9,6 +9,7 @@ public class BadPlayer extends Player {
 
 	/* play a card */
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
+		System.out.println("Strategy: normal play...");
 		// go through all cards in the hand, and play the first valid one
 		while (true) {
 			for (int i = 0; i < getSizeOfHand(); i++) {
