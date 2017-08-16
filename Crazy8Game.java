@@ -5,7 +5,7 @@ import java.util.Stack;
 public class Crazy8Game {
 	static final int BAD_PLAYERS = 1;       // BadPlayer
 	static final int RANDOM_PLAYERS = 0;    // RandomPlayer
-	static final int EIGHTS_PLAYERS = 0;    // MindTheEights
+	static final int EIGHTS_PLAYERS = 1;    // MindTheEights
 	static final int HAMPER_PLAYERS = 1;    // HamperLeader
 	static final int HIGH_PLAYERS = 1;      // DiscardHighPoints
 	static final int EXTRA_PLAYERS = 1;     // ExtraCards
@@ -128,9 +128,9 @@ public class Crazy8Game {
 		for (int i = 0; i < RANDOM_PLAYERS; i++) {
 			players.add(new RandomPlayer(new Card[]{}));
 		}
-		//		for (int i = 0; i < EIGHTS_PLAYERS; i++) {
-		//			players.add(new MindTheEights(new Card[]{})));
-		//		}
+		for (int i = 0; i < EIGHTS_PLAYERS; i++) {
+			players.add(new MindTheEights(new Card[]{}));
+		}
 		for (int i = 0; i < HAMPER_PLAYERS; i++) {
 			players.add(new HamperLeader(new Card[]{}));
 		}
