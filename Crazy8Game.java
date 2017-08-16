@@ -149,7 +149,7 @@ public class Crazy8Game {
 			drawPile.push(card);
 		}
 		Collections.shuffle(drawPile);
-		discardPile.add(drawPile.pop());
+		discardPile.cards.push(drawPile.pop());
 	}
 
 	private static void dealCardsToPlayers() {
