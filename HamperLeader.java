@@ -1,4 +1,11 @@
-// Author: Rajpal
+/*
+Author: Rajpal
+
+HamperLeader will try to hamper the progress of the leader if the leader is either the next or previous player.
+If the next player is the leader (least amount of cards) then this player will try to hamper their progress by playing a power card.
+If the previous player is the leader, this player will hold on to their power cards until the direction of play is reversed
+and then hamper them (if this player has a seven they will change direction so that they can try to hamper the leader).
+*/
 
 import java.util.ArrayList;
 import java.util.Stack;
