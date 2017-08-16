@@ -19,23 +19,29 @@ public class DiscardHighPoints extends Player {
 	@Override
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
 		System.out.println("Strategy: discarding highest value card...");
-		// sort the hand by points, then go through all cards in the hand, and play the first valid one
-		while (true) {
-			Collections.sort(hand);
-			for (int i = getSizeOfHand() - 1; i >= 0; i--) {
-				if (discardPile.isValidPlay(hand.get(i))) {
-					return discardCard(hand, i);
-				}
-			}
 
-			// pick up a card from the draw pile, if it isn't empty
-			if (!drawPile.isEmpty()) {
-				pickupCard(drawPile);
-			} else {
-				// nothing left to do, so pass
-				System.out.println("Passing!");
-				return getSizeOfHand() == 0;
+		// sort the hand by points...
+		Collections.sort(hand);
+
+		// iterate through our hand until we find a card that can be played, then play it
+		for (int i = getSizeOfHand() - 1; i >= 0; i--) {
+			// if it can be played, play it
+			if (discardPile.isValidPlay(hand.get(i))) {
+				return discardCard(hand, i);
 			}
 		}
+		// if we can't find a playable card, pick up cards until we find one
+		while (!drawPile.isEmpty()) {
+			Card pickedCard = pickupCard(drawPile);
+			// if it can be played, play it
+			if (discardPile.isValidPlay(pickedCard)) {
+				return discardCard(hand, getSizeOfHand() - 1);
+			}
+
+		}
+
+		// if we couldn't pick up a playable card, we must pass
+		System.out.println("Passing!");
+		return getSizeOfHand() == 0;
 	}
 }
