@@ -5,45 +5,23 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 public class HamperLeader extends Player{
-	
-	DiscardPile discardPile = new DiscardPile();
-    Player[] players = new Player[3];
-    ArrayList<Player> player = new ArrayList<>();
-	Player leader;
+
 
 	public HamperLeader(Card[] cards){ super(cards); }
- 
- 
-	// checking to see what player is the leader(has the fewest amount of cards)
-	public Player Leader(){
-		if (players[0].getSizeOfHand() < players[1].getSizeOfHand() && players[0].getSizeOfHand() < players[2].getSizeOfHand() &&
-		players[0].getSizeOfHand() < players[3].getSizeOfHand()){
-			leader = players[0];
-		}
-		if (players[1].getSizeOfHand() < players[0].getSizeOfHand() && players[1].getSizeOfHand() < players[2].getSizeOfHand() &&
-		players[1].getSizeOfHand() < players[3].getSizeOfHand()){
-			leader = players[1];
-		}
-		if (players[2].getSizeOfHand() < players[0].getSizeOfHand() && players[2].getSizeOfHand() < players[1].getSizeOfHand() &&
-		players[2].getSizeOfHand() < players[3].getSizeOfHand()){
-			leader = players[2];
-		}
-		if (players[3].getSizeOfHand() < players[0].getSizeOfHand() && players[3].getSizeOfHand() < players[1].getSizeOfHand() &&
-		players[3].getSizeOfHand() < players[2].getSizeOfHand()){
-			leader = players[3];
-		}
-		
-		return leader;
-		
-	}
-	
-	  /* play a card */ 
+
+	  /* play a card */
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players)
 	{
+		Player leader = players.get(0);
+		for (Player player : players) {
+			if (player.getSizeOfHand() > leader.getSizeOfHand()) {
+				leader = player;
+			}
+		}
 		Player nextPlayer = players.get(Crazy8Game.getNextPlayer());
 		int s = this.getSizeOfHand(); /* used to check if the size of hands is still the same after checking if there are power cards in hand
 										if the size of hand is still the same(ie. no card was played), then a valid card will be played */
-		if(nextPlayer == Leader()){
+		if(nextPlayer == leader){
 			int i =0; 
 			boolean b = false; // if a card is played b will equal true and program will get out of the loop
 				// check each card in hand
