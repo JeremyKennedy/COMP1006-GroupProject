@@ -91,8 +91,8 @@ public class Crazy8Game {
 		int points = 0;
 		int highestPoints = 0;
 		int highestPlayer = -1;
-		for (Player player_ : players) {      // named "player_" because "player" was taken
-			for (Card card : player_.hand) {
+		for (Player aPlayer : players) {
+			for (Card card : aPlayer.hand) {
 				points += card.getPoints();
 			}
 		}
