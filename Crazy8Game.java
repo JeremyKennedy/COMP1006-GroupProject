@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.Stack;
 
 public class Crazy8Game {
-	static final int POINTS_GOAL = 0;     // set to 0 for single round games, otherwise set point limit for multiple round games
 	static final Card[] deck = createDeck();
 
 	static int BAD_PLAYERS;       // BadPlayer
@@ -13,6 +12,7 @@ public class Crazy8Game {
 	static int HAMPER_PLAYERS;    // HamperLeader
 	static int HIGH_PLAYERS;      // DiscardHighPoints
 	static int EXTRA_PLAYERS;     // ExtraCards
+	static int POINTS_GOAL = 1;     // set to 0 for single round games, otherwise set point limit for multiple round games
 
 	static int currentRound = 0;
 	static boolean win;
@@ -45,6 +45,7 @@ public class Crazy8Game {
 			HAMPER_PLAYERS = 1;    // HamperLeader
 			HIGH_PLAYERS = 1;      // DiscardHighPoints
 			EXTRA_PLAYERS = 1;     // ExtraCards
+			POINTS_GOAL = 2000;
 		}
 		createPlayers();
 
@@ -75,7 +76,9 @@ public class Crazy8Game {
 				players.get(0).hand.add(new Card("Spades", "8"));
 				players.get(0).hand.add(new Card("Hearts", "3"));
 				players.get(0).hand.add(new Card("Spades", "3"));
-				players.get(0).hand.add(new Card("Hearts", "4"));
+				players.get(0).hand.add(new Card("Clubs", "4"));
+				players.get(0).hand.add(new Card("Diamonds", "5"));
+				players.get(0).hand.add(new Card("Hearts", "6"));
 			}
 			System.out.println("[" + players.get(0).type + "] " + "Player " + 0 + "'s hand: " + players.get(0));
 			dealCardsToPlayer(1);
