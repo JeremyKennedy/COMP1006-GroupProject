@@ -28,7 +28,7 @@ public class ExtraCards extends Player {
 
 		// if the next player has only one card left, we focus on power cards.
 		if (nextPlayer.getSizeOfHand() == 1) {
-			System.out.println("Strategy: focusing on power cards...");
+			System.out.println("Strategy: next player has one card left, focusing on power cards...");
 			// iterate through our hand until we find a power card, then play it.
 			for (int i = 0; i < getSizeOfHand(); i++) {
 				// if it is a power card and it can be played, play it
