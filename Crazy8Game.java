@@ -14,6 +14,7 @@ public class Crazy8Game {
 
 	static final Card[] deck = createDeck();
 
+	static int currentRound = 0;
 	static boolean win;
 	static DiscardPile discardPile;
 	static Stack<Card> drawPile;
@@ -36,9 +37,10 @@ public class Crazy8Game {
 		player = -1;    // start game with player 0
 		direction = 1;  // 1 = forwards, -1 = backwards
 		int consecutivePasses = 0;
-
-		System.out.println("Draw pile is: " + drawPile);
+		currentRound++;
+		System.out.println("\nDraw pile is: " + drawPile);
 		System.out.println("Discard pile is: " + discardPile);
+		System.out.println("\nBeginning round " + currentRound + "!");
 
 		while (!win && !tie) {
 			player = getNextPlayer();
@@ -112,7 +114,8 @@ public class Crazy8Game {
 			dealCardsToPlayers();
 			startGame();
 		} else {
-			System.out.printf("Game over! Player %d has won the game with %d points!%n", highestPlayer, highestPoints);
+			System.out.printf("Game over! Player %d has won the game with %d points after %d rounds!%n", highestPlayer,
+					highestPoints, currentRound);
 		}
 	}
 
