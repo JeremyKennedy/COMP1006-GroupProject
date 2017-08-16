@@ -41,11 +41,12 @@ public class HamperLeader extends Player {
 					return discardCard(hand, i);
 				}
 			}
+			System.out.println("Strategy: no power cards in hand, playing normally...");
 		}
 
 		// if the previous player is the leader, we try to keep power cards.
 		else if (prevPlayerSize == leaderSize) {
-			System.out.println("Strategy: holding for leader...");
+			System.out.println("Strategy: holding power cards for leader...");
 			// iterate through our hand until either NOT a power card, or a seven, and play it.
 			for (int i = 0; i < getSizeOfHand(); i++) {
 				// if it is a valid play...
@@ -56,11 +57,11 @@ public class HamperLeader extends Player {
 					}
 				}
 			}
+			System.out.println("Strategy: no valid moves, playing normally...");
 		}
 
 		// if we reach this point it either means we couldn't find a power card, or
 		// the next and previous player is not the leader, and we should play normally
-		System.out.println("Strategy: normal play...");
 		return playNormally(discardPile, drawPile);
 	}
 }	
