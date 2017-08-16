@@ -51,26 +51,7 @@ public class ExtraCards extends Player {
 		// the next player has more than one card left, and we should play normally
 
 		System.out.println("Strategy: normal play...");
-		// iterate through our hand until we find a card that can be played, then play it
-		for (int i = 0; i < getSizeOfHand(); i++) {
-			// if it can be played, play it
-			if (discardPile.isValidPlay(hand.get(i))) {
-				return discardCard(hand, i);
-			}
-		}
-		// if we can't find a playable card, pick up cards until we find one
-		while (!drawPile.isEmpty()) {
-			Card pickedCard = pickupCard(drawPile);
-			// if it can be played, play it
-			if (discardPile.isValidPlay(pickedCard)) {
-				return discardCard(hand, getSizeOfHand() - 1);
-			}
-
-		}
-
-		// if we couldn't pick up a playable card, we must pass
-		System.out.println("Passing!");
-		return getSizeOfHand() == 0;
+		return playNormally(discardPile, drawPile);
 	}
 }
 

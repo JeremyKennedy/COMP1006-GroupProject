@@ -100,4 +100,28 @@ public abstract class Player {
 	public String toString() {
 		return String.valueOf(hand);
 	}
+
+	protected boolean playNormally(DiscardPile discardPile, Stack<Card> drawPile) {
+		// iterate through our hand until we find a card that can be played, then play it
+		for (int i = getSizeOfHand() - 1; i >= 0; i--) {
+			// if it can be played, play it
+			if (discardPile.isValidPlay(hand.get(i))) {
+				return discardCard(hand, i);
+			}
+		}
+
+		// if we can't find a playable card, pick up cards until we find one
+		while (!drawPile.isEmpty()) {
+			Card pickedCard = pickupCard(drawPile);
+			// if it can be played, play it
+			if (discardPile.isValidPlay(pickedCard)) {
+				return discardCard(hand, getSizeOfHand() - 1);
+			}
+
+		}
+
+		// if we couldn't pick up a playable card, we must pass
+		System.out.println("Passing!");
+		return getSizeOfHand() == 0;
+	}
 }

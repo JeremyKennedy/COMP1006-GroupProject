@@ -8,6 +8,8 @@ public class RandomPlayer extends Player {
 
 	@Override
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
-		return false;
+
+		System.out.println("Strategy: normal play...");
+		return playNormally(discardPile, drawPile);
 	}
 }
