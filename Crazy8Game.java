@@ -65,8 +65,9 @@ public class Crazy8Game {
 					System.out.printf(
 							"A two was played! Player %d is now picking up cards and skipping their turn...%n", player);
 					System.out.println("Their old hand: " + players.get(player));
-					players.get(player).pickupCard(drawPile);
-					players.get(player).pickupCard(drawPile);
+					for (int i = 0; i < 2 && !drawPile.isEmpty(); i++) {
+						players.get(player).pickupCard(drawPile);
+					}
 					System.out.println("Their new hand: " + players.get(player));
 				} else if (newTopDiscard.getRank() == 4) {
 					player = getNextPlayer();
