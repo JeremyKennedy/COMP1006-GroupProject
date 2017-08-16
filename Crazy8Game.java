@@ -176,10 +176,19 @@ public class Crazy8Game {
 
 
 	static int getNextPlayer() {
-		if (direction == -1 && player == 0) {  // prevents the current player from being negative,
-			player += playerCount;             // since floor division doesn't work as desired for negative numbers
+		int nextPlayer = player + direction;
+		if (nextPlayer == -1) {                 // prevents the current player from being negative,
+			nextPlayer += playerCount;          // since floor division doesn't work as desired for negative numbers
 		}
-		return (player + direction) % playerCount;
+		return nextPlayer % playerCount;
+	}
+
+	static int getPrevPlayer() {
+		int prevPlayer = player - direction;
+		if (prevPlayer == -1) {                 // prevents the current player from being negative,
+			prevPlayer += playerCount;          // since floor division doesn't work as desired for negative numbers
+		}
+		return prevPlayer % playerCount;
 	}
 
 
