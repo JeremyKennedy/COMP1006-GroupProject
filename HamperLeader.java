@@ -12,7 +12,7 @@ public class HamperLeader extends Player {
 
 	/* play a card */
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
-		// find the size of the leader's hand
+		// find the size of the next and previous leader's hand
 		int nextPlayerSize = players.get(Crazy8Game.getNextPlayer()).getSizeOfHand();
 		int prevPlayerSize = players.get(Crazy8Game.getPrevPlayer()).getSizeOfHand();
 		int leaderSize = players.get(0).getSizeOfHand();
