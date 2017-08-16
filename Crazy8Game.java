@@ -158,11 +158,12 @@ public class Crazy8Game {
 		discardPile.cards.push(drawPile.pop());
 	}
 
-	// deal out five cards to every player in the game
+	// deal out five cards to every player in the game (seven cards if two player game)
 	private static void dealCardsToPlayers() {
 		for (int i = 0; i < players.size(); i++) {
 			ArrayList<Card> hand = new ArrayList<>();
-			for (int i1 = 0; i1 < 5; i1++) {
+			int cardCount = playerCount == 2 ? 7 : 5;
+			for (int j = 0; j < cardCount; j++) {
 				hand.add(drawPile.pop());
 			}
 			players.get(i).hand = hand;
