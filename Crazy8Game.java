@@ -10,7 +10,7 @@ public class Crazy8Game {
 	static final int HIGH_PLAYERS = 1;      // DiscardHighPoints
 	static final int EXTRA_PLAYERS = 1;     // ExtraCards
 
-	static final int POINTS_GOAL = 10000;     // set to 0 for single round games, otherwise set point limit for multiple round games
+	static final int POINTS_GOAL = 2000;     // set to 0 for single round games, otherwise set point limit for multiple round games
 
 	static final Card[] deck = createDeck();
 
@@ -44,7 +44,7 @@ public class Crazy8Game {
 
 		while (!win && !tie) {
 			player = getNextPlayer();
-			System.out.println("\nIt is player " + player + "'s turn! [" + players.get(player).type + "]");
+			System.out.printf("\nIt is player %d's turn! [%s]%n", player, players.get(player).type);
 			System.out.println("Their hand: " + players.get(player));
 
 			Card topDiscard = discardPile.top();
@@ -57,6 +57,7 @@ public class Crazy8Game {
 
 			System.out.println("Their new hand: " + players.get(player));
 
+			// logic for power cards and tie-game detection
 			Card newTopDiscard = discardPile.top();
 			if (topDiscard != newTopDiscard) {
 				consecutivePasses = 0;
@@ -76,7 +77,7 @@ public class Crazy8Game {
 					System.out.println("A seven was played! Switching play direction...");
 					direction = direction * -1;
 				}
-			} else if (consecutivePasses >= playerCount - 1) {
+			} else if (consecutivePasses >= playerCount) {
 				System.out.println("--------------------\n");
 				System.out.println("No one can play, and the draw pile is empty. Tie game! Resetting...");
 				emptyPlayersHands();
@@ -110,6 +111,8 @@ public class Crazy8Game {
 			System.out.printf("[%s] Player %d's total points: %d%n", players.get(i).type, i, players.get(i).points);
 		}
 		System.out.println("\n--------------------\n");
+
+		// continue playing if we haven't reached the point goal yet, otherwise end the game
 		if (highestPoints < POINTS_GOAL) {
 			resetDrawAndDiscard();
 			dealCardsToPlayers();
@@ -120,6 +123,7 @@ public class Crazy8Game {
 		}
 	}
 
+	// using the player-count constants, create the appropriate number of players
 	private static void createPlayers() {
 		players = new ArrayList<>();
 		for (int i = 0; i < BAD_PLAYERS; i++) {
@@ -143,6 +147,7 @@ public class Crazy8Game {
 		playerCount = players.size();
 	}
 
+	// reset the draw and discard piles, shuffle the draw pile, then discard one card
 	private static void resetDrawAndDiscard() {
 		discardPile = new DiscardPile();
 		drawPile = new Stack<>();
@@ -153,28 +158,26 @@ public class Crazy8Game {
 		discardPile.cards.push(drawPile.pop());
 	}
 
+	// deal out five cards to every player in the game
 	private static void dealCardsToPlayers() {
 		for (int i = 0; i < players.size(); i++) {
-			players.get(i).hand = getNewHand();
+			ArrayList<Card> hand = new ArrayList<>();
+			for (int i1 = 0; i1 < 5; i1++) {
+				hand.add(drawPile.pop());
+			}
+			players.get(i).hand = hand;
 			System.out.println("[" + players.get(i).type + "] " + "Player " + i + "'s hand: " + players.get(i));
 		}
 	}
 
+	// reset every player's hand (used for tie games to make sure no points are awarded)
 	private static void emptyPlayersHands() {
 		for (Player player : players) {
 			player.hand = new ArrayList<>();
 		}
 	}
 
-	private static ArrayList<Card> getNewHand() {
-		ArrayList<Card> hand = new ArrayList<>();
-		for (int i = 0; i < 5; i++) {
-			hand.add(drawPile.pop());
-		}
-		return hand;
-	}
-
-
+	// returns the index of the next player in the players array
 	static int getNextPlayer() {
 		int nextPlayer = player + direction;
 		if (nextPlayer == -1) {                 // prevents the current player from being negative,
@@ -183,6 +186,7 @@ public class Crazy8Game {
 		return nextPlayer % playerCount;
 	}
 
+	// returns the index of the previous player in the players array
 	static int getPrevPlayer() {
 		int prevPlayer = player - direction;
 		if (prevPlayer == -1) {                 // prevents the current player from being negative,
@@ -191,7 +195,7 @@ public class Crazy8Game {
 		return prevPlayer % playerCount;
 	}
 
-
+	// creates a full 52 card deck, to be used when refilling the draw pile
 	private static Card[] createDeck() {
 		/* create the deck */
 		Card[] deck = new Card[52];
