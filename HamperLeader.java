@@ -20,6 +20,7 @@ public class HamperLeader extends Player {
 
 	/* play a card */
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
+
 		// find the size of the next and previous leader's hand
 		int nextPlayerSize = players.get(Crazy8Game.getNextPlayer()).getSizeOfHand();
 		int prevPlayerSize = players.get(Crazy8Game.getPrevPlayer()).getSizeOfHand();
@@ -29,6 +30,7 @@ public class HamperLeader extends Player {
 				leaderSize = player.getSizeOfHand();
 			}
 		}
+
 		// if the next player is the leader, play a power card, if we have one.
 		if (nextPlayerSize == leaderSize) {
 			System.out.println("Strategy: hampering leader...");
@@ -40,6 +42,7 @@ public class HamperLeader extends Player {
 				}
 			}
 		}
+
 		// if the previous player is the leader, we try to keep power cards.
 		else if (prevPlayerSize == leaderSize) {
 			System.out.println("Strategy: holding for leader...");
@@ -54,6 +57,7 @@ public class HamperLeader extends Player {
 				}
 			}
 		}
+
 		// if we reach this point it either means we couldn't find a power card, or
 		// the next and previous player is not the leader, and we should play normally
 		System.out.println("Strategy: normal play...");

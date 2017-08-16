@@ -18,6 +18,7 @@ public class DiscardHighPoints extends Player {
 
 	@Override
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
+
 		System.out.println("Strategy: discarding highest value card...");
 
 		// sort the hand by points...
