@@ -57,7 +57,7 @@ public abstract class Player {
 				Collections.sort(handSuits);
 				String mostCommonSuit = hand.get(0).getSuit();
 				int mostCommonCount = 0;
-				int count = 1;
+				int count = 0;
 				for (int i = 1; i < handSuits.size(); i++) {
 					if (Objects.equals(handSuits.get(i - 1), handSuits.get(i))) {
 						count++;
