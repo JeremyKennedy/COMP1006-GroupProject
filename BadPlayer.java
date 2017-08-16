@@ -11,7 +11,7 @@ public class BadPlayer extends Player {
 	/* play a card */
 	public boolean play(DiscardPile discardPile, Stack<Card> drawPile, ArrayList<Player> players) {
 
-		System.out.println("Strategy: normal play...");
+		System.out.println("Strategy: playing normally...");
 		return playNormally(discardPile, drawPile);
 	}
 }

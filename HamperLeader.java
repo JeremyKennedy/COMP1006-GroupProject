@@ -30,7 +30,6 @@ public class HamperLeader extends Player {
 				leaderSize = player.getSizeOfHand();
 			}
 		}
-
 		// if the next player is the leader, play a power card, if we have one.
 		if (nextPlayerSize == leaderSize) {
 			System.out.println("Strategy: hampering leader...");
@@ -57,7 +56,9 @@ public class HamperLeader extends Player {
 					}
 				}
 			}
-			System.out.println("Strategy: no valid moves, playing normally...");
+			System.out.println("Strategy: no valid moves in hand, playing normally...");
+		} else {
+			System.out.println("Strategy: playing normally...");
 		}
 
 		// if we reach this point it either means we couldn't find a power card, or

@@ -45,12 +45,15 @@ public class ExtraCards extends Player {
 					return discardCard(hand, getSizeOfHand() - 1);
 				}
 			}
+			System.out.println("Strategy: deck is empty, playing normally...");
+
+		} else {
+			System.out.println("Strategy: playing normally...");
 		}
 
 		// if we reach this point it either means we couldn't find a power card, or
 		// the next player has more than one card left, and we should play normally
 
-		System.out.println("Strategy: normal play...");
 		return playNormally(discardPile, drawPile);
 	}
 }
