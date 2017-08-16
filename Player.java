@@ -55,7 +55,7 @@ public abstract class Player {
 			// otherwise we find our most frequent suit
 			} else {
 				Collections.sort(handSuits);
-				String mostCommonSuit = "<unset>";
+				String mostCommonSuit = hand.get(0).getSuit();
 				int mostCommonCount = 0;
 				int count = 1;
 				for (int i = 1; i < handSuits.size(); i++) {
