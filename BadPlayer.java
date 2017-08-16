@@ -13,8 +13,7 @@ public class BadPlayer extends Player {
 		while (true) {
 			for (int i = 0; i < getSizeOfHand(); i++) {
 				if (discardPile.isValidPlay(hand.get(i))) {
-					discardPile.add(this.hand.remove(i));
-					return getSizeOfHand() == 0;
+					return discardCard(hand, i);
 				}
 			}
 

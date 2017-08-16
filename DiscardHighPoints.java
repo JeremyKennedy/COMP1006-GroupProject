@@ -20,8 +20,7 @@ public class DiscardHighPoints extends Player {
 			Collections.sort(hand);
 			for (int i = getSizeOfHand() - 1; i >= 0; i--) {
 				if (discardPile.isValidPlay(hand.get(i))) {
-					discardPile.add(this.hand.remove(i));
-					return getSizeOfHand() == 0;
+					return discardCard(hand, i);
 				}
 			}
 

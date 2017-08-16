@@ -31,9 +31,7 @@ public class ExtraCards extends Player {
 			for (int i = 0; i < getSizeOfHand(); i++) {
 				// if it is a power card and it can be played, play it
 				if (Card.isPowerCard(hand.get(i)) && discardPile.isValidPlay(hand.get(i))) {
-					discardPile.add(this.hand.remove(i));
-					// if our hand is empty, return true
-					return getSizeOfHand() == 0;
+					return discardCard(hand, i);
 				}
 			}
 
@@ -42,9 +40,7 @@ public class ExtraCards extends Player {
 				Card pickedCard = pickupCard(drawPile);
 				// if it is a power card and it can be played, play it
 				if (Card.isPowerCard(pickedCard) && discardPile.isValidPlay(pickedCard)) {
-					discardPile.add(this.hand.remove(getSizeOfHand() - 1));
-					// if our hand is empty, return true
-					return getSizeOfHand() == 0;
+					return discardCard(hand, getSizeOfHand() - 1);
 				}
 			}
 		}
@@ -56,9 +52,7 @@ public class ExtraCards extends Player {
 		for (int i = 0; i < getSizeOfHand(); i++) {
 			// if it can be played, play it
 			if (discardPile.isValidPlay(hand.get(i))) {
-				discardPile.add(this.hand.remove(i));
-				// if our hand is empty, return true
-				return getSizeOfHand() == 0;
+				return discardCard(hand, i);
 			}
 		}
 		// if we can't find a playable card, pick up cards until we find one
@@ -66,9 +60,7 @@ public class ExtraCards extends Player {
 			Card pickedCard = pickupCard(drawPile);
 			// if it can be played, play it
 			if (discardPile.isValidPlay(pickedCard)) {
-				discardPile.add(this.hand.remove(getSizeOfHand() - 1));
-				// if our hand is empty, return true
-				return getSizeOfHand() == 0;
+				return discardCard(hand, getSizeOfHand() - 1);
 			}
 
 		}
