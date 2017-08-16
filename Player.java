@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
 
 public abstract class Player {
 	public int points;  // represents count of points from winning games
@@ -31,6 +29,70 @@ public abstract class Player {
 		hand.add(card);
 		System.out.println("Picked up card: " + card);
 		return card;
+	}
+
+	// discard a card, and if the card is an eight, play the most common suit in the player's hand after
+	public boolean discardCard(ArrayList<Card> hand, int cardNumber) {
+		Card eightNewSuit = null;
+
+		// if we have an eight, determine the best suit to play after
+		if (hand.get(cardNumber).getRank() == 8) {
+
+			// create an array with all the suits in the hand and remove the card we are about to play
+			ArrayList<String> handSuits = new ArrayList<>();
+			for (Card card : hand) {
+				handSuits.add(card.getSuit());
+			}
+			handSuits.remove(cardNumber);
+
+			// if the eight was our last card, leave the suit as the eight's suit
+			if (handSuits.size() == 0) {
+				eightNewSuit = hand.get(0);
+			// if we only have one card left, set the suit to that
+			} else if (handSuits.size() == 1) {
+				eightNewSuit = new Card(handSuits.get(0), "8");
+			// otherwise we find our most frequent suit
+			} else {
+				Collections.sort(handSuits);
+				String mostCommonSuit = "<unset>";
+				int mostCommonCount = 0;
+				int count = 1;
+				for (int i = 1; i < handSuits.size(); i++) {
+					if (Objects.equals(handSuits.get(i - 1), handSuits.get(i))) {
+						count++;
+						if (count > mostCommonCount) {
+							mostCommonCount++;
+							mostCommonSuit = handSuits.get(i);
+						}
+					} else {
+						count = 0;
+					}
+				}
+				eightNewSuit = new Card(mostCommonSuit, "8");
+			}
+
+		}
+		return discardCard(hand, cardNumber, eightNewSuit);
+
+	}
+
+	// discard a card, and if the card is an eight, play eightNewSuit after
+	public boolean discardCard(ArrayList<Card> hand, int cardNumber, Card eightNewSuit) {
+		if (Crazy8Game.discardPile.isValidPlay(hand.get(cardNumber))) {
+			Card discardedCard = this.hand.remove(cardNumber);
+			Crazy8Game.discardPile.add(discardedCard);
+			if (discardedCard.getRank() == 8) {
+				if (eightNewSuit != null && eightNewSuit.getRank() == 8) {
+					System.out.println(
+							"An eight was played! Player " + Crazy8Game.player + " is now setting the suit...");
+					Crazy8Game.discardPile.add(eightNewSuit);
+
+				} else {
+					System.out.println("ERROR: INVALID CARD PLAYED ON TOP OF EIGHT - RANK MUST BE EIGHT");
+				}
+			}
+		}
+		return getSizeOfHand() == 0;
 	}
 
 	@Override
