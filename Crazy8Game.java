@@ -1,18 +1,18 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.Stack;
 
 public class Crazy8Game {
-	static final int BAD_PLAYERS = 1;       // BadPlayer
-	static final int RANDOM_PLAYERS = 1;    // RandomPlayer
-	static final int EIGHTS_PLAYERS = 1;    // MindTheEights
-	static final int HAMPER_PLAYERS = 1;    // HamperLeader
-	static final int HIGH_PLAYERS = 1;      // DiscardHighPoints
-	static final int EXTRA_PLAYERS = 1;     // ExtraCards
-
-	static final int POINTS_GOAL = 2000;     // set to 0 for single round games, otherwise set point limit for multiple round games
-
+	static final int POINTS_GOAL = 0;     // set to 0 for single round games, otherwise set point limit for multiple round games
 	static final Card[] deck = createDeck();
+
+	static int BAD_PLAYERS;       // BadPlayer
+	static int RANDOM_PLAYERS;    // RandomPlayer
+	static int EIGHTS_PLAYERS;    // MindTheEights
+	static int HAMPER_PLAYERS;    // HamperLeader
+	static int HIGH_PLAYERS;      // DiscardHighPoints
+	static int EXTRA_PLAYERS;     // ExtraCards
 
 	static int currentRound = 0;
 	static boolean win;
@@ -24,10 +24,65 @@ public class Crazy8Game {
 	static int direction;                   // 1 = forwards, -1 = backwards
 
 	public static void main(String[] args) {
+		if (args.length > 0) {
+			if (Objects.equals(args[0], "eights")) {
+				EIGHTS_PLAYERS = 1;    // MindTheEights
+				RANDOM_PLAYERS = 2;    // RandomPlayer
+			} else if (Objects.equals(args[0], "hamper")) {
+				HAMPER_PLAYERS = 1;    // HamperLeader
+				RANDOM_PLAYERS = 2;    // RandomPlayer
+			} else if (Objects.equals(args[0], "high")) {
+				HIGH_PLAYERS = 1;      // DiscardHighPoints
+				RANDOM_PLAYERS = 2;    // RandomPlayer
+			} else if (Objects.equals(args[0], "extra")) {
+				EXTRA_PLAYERS = 1;     // ExtraCards
+				RANDOM_PLAYERS = 2;    // RandomPlayer
+			}
+		} else {
+			BAD_PLAYERS = 1;       // BadPlayer
+			RANDOM_PLAYERS = 1;    // RandomPlayer
+			EIGHTS_PLAYERS = 1;    // MindTheEights
+			HAMPER_PLAYERS = 1;    // HamperLeader
+			HIGH_PLAYERS = 1;      // DiscardHighPoints
+			EXTRA_PLAYERS = 1;     // ExtraCards
+		}
 		createPlayers();
 
 		resetDrawAndDiscard();
-		dealCardsToPlayers();
+
+		if (args.length > 0) {
+			players.get(0).hand = new ArrayList<Card>();
+			if (Objects.equals(args[0], "eights")) {
+				players.get(0).hand.add(new Card("Hearts", "8"));
+				players.get(0).hand.add(new Card("Hearts", "2"));
+				players.get(0).hand.add(new Card("Spades", "3"));
+				players.get(0).hand.add(new Card("Clubs", "4"));
+				players.get(0).hand.add(new Card("Diamonds", "5"));
+			} else if (Objects.equals(args[0], "hamper")) {
+				players.get(0).hand.add(new Card("Hearts", "8"));
+				players.get(0).hand.add(new Card("Spades", "8"));
+				players.get(0).hand.add(new Card("Hearts", "3"));
+				players.get(0).hand.add(new Card("Spades", "3"));
+				players.get(0).hand.add(new Card("Hearts", "7"));
+			} else if (Objects.equals(args[0], "high")) {
+				players.get(0).hand.add(new Card("Hearts", "8"));
+				players.get(0).hand.add(new Card("Spades", "8"));
+				players.get(0).hand.add(new Card("Hearts", "2"));
+				players.get(0).hand.add(new Card("Spades", "3"));
+				players.get(0).hand.add(new Card("Hearts", "4"));
+			} else if (Objects.equals(args[0], "extra")) {
+				players.get(0).hand.add(new Card("Hearts", "8"));
+				players.get(0).hand.add(new Card("Spades", "8"));
+				players.get(0).hand.add(new Card("Hearts", "3"));
+				players.get(0).hand.add(new Card("Spades", "3"));
+				players.get(0).hand.add(new Card("Hearts", "4"));
+			}
+			System.out.println("[" + players.get(0).type + "] " + "Player " + 0 + "'s hand: " + players.get(0));
+			dealCardsToPlayer(1);
+			dealCardsToPlayer(2);
+		} else {
+			dealCardsToPlayers();
+		}
 		startGame();
 	}
 
@@ -126,12 +181,6 @@ public class Crazy8Game {
 	// using the player-count constants, create the appropriate number of players
 	private static void createPlayers() {
 		players = new ArrayList<>();
-		for (int i = 0; i < BAD_PLAYERS; i++) {
-			players.add(new BadPlayer(new Card[]{}));
-		}
-		for (int i = 0; i < RANDOM_PLAYERS; i++) {
-			players.add(new RandomPlayer(new Card[]{}));
-		}
 		for (int i = 0; i < EIGHTS_PLAYERS; i++) {
 			players.add(new MindTheEights(new Card[]{}));
 		}
@@ -143,6 +192,12 @@ public class Crazy8Game {
 		}
 		for (int i = 0; i < EXTRA_PLAYERS; i++) {
 			players.add(new ExtraCards(new Card[]{}));
+		}
+		for (int i = 0; i < BAD_PLAYERS; i++) {
+			players.add(new BadPlayer(new Card[]{}));
+		}
+		for (int i = 0; i < RANDOM_PLAYERS; i++) {
+			players.add(new RandomPlayer(new Card[]{}));
 		}
 		playerCount = players.size();
 	}
@@ -161,14 +216,20 @@ public class Crazy8Game {
 	// deal out five cards to every player in the game (seven cards if two player game)
 	private static void dealCardsToPlayers() {
 		for (int i = 0; i < players.size(); i++) {
-			ArrayList<Card> hand = new ArrayList<>();
-			int cardCount = playerCount == 2 ? 7 : 5;
-			for (int j = 0; j < cardCount; j++) {
-				hand.add(drawPile.pop());
-			}
-			players.get(i).hand = hand;
-			System.out.println("[" + players.get(i).type + "] " + "Player " + i + "'s hand: " + players.get(i));
+			dealCardsToPlayer(i);
 		}
+	}
+
+	// deal out five cards to every player in the game (seven cards if two player game)
+	private static void dealCardsToPlayer(int player) {
+		ArrayList<Card> hand = new ArrayList<>();
+		int cardCount = playerCount == 2 ? 7 : 5;
+		for (int j = 0; j < cardCount; j++) {
+			hand.add(drawPile.pop());
+		}
+		players.get(player).hand = hand;
+		System.out.println(
+				"[" + players.get(player).type + "] " + "Player " + player + "'s hand: " + players.get(player));
 	}
 
 	// reset every player's hand (used for tie games to make sure no points are awarded)
