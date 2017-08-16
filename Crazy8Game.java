@@ -114,7 +114,9 @@ public class Crazy8Game {
 
 			// logic for power cards and tie-game detection
 			Card newTopDiscard = discardPile.top();
-			if (topDiscard != newTopDiscard) {
+			if (win) {
+				break;
+			} else if (topDiscard != newTopDiscard) {
 				consecutivePasses = 0;
 				if (newTopDiscard.getRank() == 2) {
 					player = getNextPlayer();
